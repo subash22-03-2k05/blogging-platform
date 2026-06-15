@@ -1,9 +1,10 @@
-'use client'
+"use client"
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import BlogCard from '@/components/BlogCard'
+import Hero from '@/components/Hero'
 import { DEFAULT_CATEGORIES } from '@/lib/constants'
 import { Post } from '@/types'
 
@@ -91,118 +92,30 @@ const item = {
 }
 
 export default function Home() {
+  const heroCta = (
+    <>
+      <Link href="/signup" className="button-primary">
+        Get Started
+      </Link>
+      <Link href="/blog" className="button-secondary">
+        Explore Blog
+      </Link>
+    </>
+  )
+
   return (
     <>
-      {/* Hero Section */}
-      <section className="section-padding bg-gradient-dark relative overflow-hidden">
-        <div className="container-app">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
-          >
-            {/* Left Content */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-primary/10 border border-primary/30"
-              >
-                <span className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-primary font-semibold text-small">Welcome to the Future of Blogging</span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="font-space-grotesk text-display mb-6 leading-tight"
-              >
-                Share Your <span className="gradient-text">Stories</span> with the World
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="text-text-secondary text-body mb-8 max-w-lg leading-relaxed"
-              >
-                A premium blogging platform designed for creators, writers, and innovators. Share your thoughts, build your audience, and make an impact.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex gap-4 flex-wrap"
-              >
-                <Link href="/signup" className="button-primary">
-                  Get Started
-                </Link>
-                <Link href="/blog" className="button-secondary">
-                  Explore Blog
-                </Link>
-              </motion.div>
-
-              {/* Metrics */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="mt-16 grid grid-cols-3 gap-8"
-              >
-                {[
-                  { number: '500+', label: 'Articles' },
-                  { number: '50K+', label: 'Readers' },
-                  { number: '100+', label: 'Authors' },
-                ].map((metric, i) => (
-                  <div key={i} className="text-center">
-                    <p className="text-h3 font-bold text-primary mb-2">{metric.number}</p>
-                    <p className="text-text-secondary text-small">{metric.label}</p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Right Side - Featured Article */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-              className="relative"
-            >
-              <div className="relative h-96 lg:h-full min-h-[500px] rounded-2xl overflow-hidden glass-card">
-                <Image
-                  src={FEATURED_POSTS[0].featured_image}
-                  alt={FEATURED_POSTS[0].title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <h3 className="text-h4 font-bold mb-4 line-clamp-2">{FEATURED_POSTS[0].title}</h3>
-                  <Link href={`/blog/${FEATURED_POSTS[0].slug}`} className="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors">
-                    Read Article →
-                  </Link>
-                </div>
-              </div>
-
-              {/* Floating Cards */}
-              <motion.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -bottom-12 -left-8 glass-card p-6 w-64 shadow-glow-primary-lg"
-              >
-                <p className="text-small text-text-secondary mb-2">Featured Article</p>
-                <p className="font-semibold text-text-primary">{FEATURED_POSTS[0].title}</p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Hero Section (component) */}
+      <Hero
+        title={
+          <>
+            Share Your <span className="gradient-text">Stories</span> with the World
+          </>
+        }
+        subtitle="A premium blogging platform designed for creators, writers, and innovators. Share your thoughts, build your audience, and make an impact."
+        cta={heroCta}
+        image={FEATURED_POSTS[0].featured_image}
+      />
 
       {/* Featured Articles Section */}
       <section className="section-padding">
