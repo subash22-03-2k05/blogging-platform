@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-text-primary font-inter;
+  }
+
+  h1 {
+    @apply font-space-grotesk text-h1 font-bold;
+  }
+
+  h2 {
+    @apply font-space-grotesk text-h2 font-bold;
+  }
+
+  h3 {
+    @apply font-space-grotesk text-h3 font-bold;
+  }
+
+  h4 {
+    @apply font-space-grotesk text-h4 font-bold;
+  }
+
+  p {
+    @apply text-body text-text-secondary;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply max-w-container mx-auto px-8 md:px-16 lg:px-24;
+  }
+
+  .glass-card {
+    @apply bg-card/50 backdrop-blur-glass border border-border rounded-2xl;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:bg-card/70 hover:border-primary/30 hover:shadow-glow-primary hover:scale-105;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+
+  .button-primary {
+    @apply px-8 py-4 rounded-lg font-semibold text-background bg-primary transition-all duration-300 hover:bg-secondary hover:shadow-glow-primary-lg hover:scale-105 active:scale-95;
+  }
+
+  .button-secondary {
+    @apply px-8 py-4 rounded-lg font-semibold border-2 border-primary text-primary bg-transparent transition-all duration-300 hover:bg-primary/10 hover:shadow-glow-primary active:scale-95;
+  }
+
+  .glow-border {
+    @apply border border-transparent bg-clip-border bg-gradient-primary p-[1px];
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 77, 0, 0.8);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
