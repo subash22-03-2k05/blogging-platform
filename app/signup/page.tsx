@@ -48,11 +48,21 @@ export default function SignUp() {
     }
 
     setLoading(true)
-    // TODO: Implement signup API call
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName: formData.fullName, username: formData.username, email: formData.email, password: formData.password }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Signup failed')
+      // auto redirect to signin
       setLoading(false)
-      alert('Sign up successful! Redirecting to dashboard...')
-    }, 2000)
+      window.location.href = '/signin'
+    } catch (err: any) {
+      setLoading(false)
+      setError(err.message || 'Signup failed')
+    }
   }
 
   return (

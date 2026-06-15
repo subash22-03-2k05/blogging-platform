@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { isValidEmail } from '@/lib/utils'
+import { signIn } from 'next-auth/react'
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -36,11 +37,19 @@ export default function SignIn() {
     }
 
     setLoading(true)
-    // TODO: Implement signin API call
-    setTimeout(() => {
+    try {
+      const res: any = await signIn('credentials', { redirect: false, email: formData.email, password: formData.password })
       setLoading(false)
-      alert('Sign in successful! Redirecting to dashboard...')
-    }, 2000)
+      if (res?.error) {
+        setError(res.error)
+        return
+      }
+      // success
+      window.location.href = '/admin'
+    } catch (err: any) {
+      setLoading(false)
+      setError(err.message || 'Sign in failed')
+    }
   }
 
   return (
