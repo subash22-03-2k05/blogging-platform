@@ -1,3 +1,39 @@
+import { fetchPostBySlug } from '@/lib/wordpress'
+import { generateMetaTags } from '@/lib/utils'
+import { notFound } from 'next/navigation'
+
+type Props = {
+  params: { slug: string }
+}
+
+export const revalidate = 60
+
+export async function generateMetadata({ params }: Props) {
+  const post = await fetchPostBySlug(params.slug)
+  if (!post) return {}
+  return generateMetaTags(post.seo_title || post.title, post.seo_description || post.excerpt, post.featured_image)
+}
+
+export default async function PostPage({ params }: Props) {
+  const post = await fetchPostBySlug(params.slug)
+  if (!post) return notFound()
+
+  return (
+    <article className="section-padding">
+      <div className="container-app">
+        <header className="mb-8">
+          <p className="text-small text-text-secondary">{post.category}</p>
+          <h1 className="font-space-grotesk text-h2 font-bold mb-4">{post.title}</h1>
+          <p className="text-text-secondary text-small">By {post.author?.full_name || 'Author'} • {new Date(post.created_at).toLocaleDateString()}</p>
+        </header>
+
+        <div className="prose prose-invert max-w-none">
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        </div>
+      </div>
+    </article>
+  )
+}
 'use client'
 
 import { motion } from 'framer-motion'
